@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bloomberg.blp_scala.iml" filepath="$PROJECT_DIR$/.idea/modules/bloomberg.blp_scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bloomberg.rate.iml" filepath="$PROJECT_DIR$/.idea/modules/bloomberg.rate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/blp_scala.iml" filepath="$PROJECT_DIR$/.idea/modules/blp_scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/blp_scala-build.iml" filepath="$PROJECT_DIR$/.idea/modules/blp_scala-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/project.blp_scala-build.iml" filepath="$PROJECT_DIR$/.idea/modules/project.blp_scala-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rate.iml" filepath="$PROJECT_DIR$/.idea/modules/rate.iml" />
+    </modules>
+  </component>
+</project>

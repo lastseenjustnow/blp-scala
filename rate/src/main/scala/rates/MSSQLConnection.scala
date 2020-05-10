@@ -14,8 +14,8 @@ trait MSSQLConnection {
 
     val jdbcUrl = s"jdbc:sqlserver://${cred.server}:1433;" +
       s"database=${cred.database};" +
-      s"user=${cred.user};" +
-      s"password=${cred.password}"
+      s"user=${cred.credentials.user};" +
+      s"password=${cred.credentials.password}"
 
     val driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 

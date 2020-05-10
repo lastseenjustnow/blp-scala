@@ -1,14 +1,16 @@
 package rates
 
-import actors.MainRunningActor
-import actors.MainRunningActor.Begin
-import akka.actor.typed.ActorSystem
+import actors.RunningActor
+import com.typesafe.akka.extension.quartz.QuartzSchedulerExtension
+import akka.actor.{ActorSystem, Props}
 
 object SimpleCurrRatesRequestApp extends App {
 
-  val mainRunningActor: ActorSystem[MainRunningActor.Begin] =
-    ActorSystem(MainRunningActor(), "MyRunningActor")
+  val system = ActorSystem("SchedulerSystem")
+  val receiver = system.actorOf(Props(new RunningActor))
+  val sched = QuartzSchedulerExtension(system)
 
-  mainRunningActor ! Begin("GO!")
+  sched.createSchedule("every30Seconds", None,"*/30 * * ? * *")
+  sched.schedule("every30Seconds", receiver, RunningActor.Run)
 
 }

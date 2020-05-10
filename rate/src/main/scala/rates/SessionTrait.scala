@@ -16,7 +16,7 @@ trait SessionTrait {
     if (!session.start()) {
       System.err.println("Failed to start session.")
     } else {
-      System.out.println("Connected successfully.")
+      System.out.println("Connection with Bloomberg successfully established!")
     }
     session
   }

@@ -1,16 +1,18 @@
 import sbt.Keys._
 import sbt.file
 
-scalaVersion := "2.13.2"
+scalaVersion := "2.12.8"
 
 val akkaVersion = "2.6.5"
-val quartzScheduler = "1.8.3-akka-2.6.x"
+val quartzSchedulerVersion = "1.8.3-akka-2.6.x"
+val mssqlVersion = "8.2.2.jre11"
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
-  scalaVersion := "2.13.2",
+  scalaVersion := "2.12.8",
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
-    "com.enragedginger" %% "akka-quartz-scheduler" % quartzScheduler
+    "com.enragedginger" %% "akka-quartz-scheduler" % quartzSchedulerVersion,
+    "com.microsoft.sqlserver" % "mssql-jdbc" % mssqlVersion,
   )
 )
 
@@ -22,5 +24,8 @@ lazy val blp_scala = (project in file("."))
 lazy val rate = (project in file("rate"))
   .settings(
     commonSettings,
+    Compile / unmanagedSourceDirectories := Seq(baseDirectory.value / "extra-src"),
+    mainClass in assembly := Some("rates.SimpleCurrRatesRequestApp"),
+    logLevel := Level.Debug,
     name := "rate"
   )

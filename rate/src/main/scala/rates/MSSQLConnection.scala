@@ -2,7 +2,7 @@ package rates
 
 import java.sql.{Connection, DriverManager}
 
-import rates.struct.MSSQLCredentials
+import rates.struct.{ExchangeRateDataRow, MSSQLCredentials}
 
 trait MSSQLConnection {
 
@@ -10,7 +10,7 @@ trait MSSQLConnection {
 
     try {
       Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
-    } catch {case e => e.printStackTrace()}
+    } catch {case e: Throwable => e.printStackTrace()}
 
     val jdbcUrl = s"jdbc:sqlserver://${cred.server}:1433;" +
       s"database=${cred.database};" +
@@ -25,19 +25,37 @@ trait MSSQLConnection {
     try {
       DriverManager.getConnection(jdbcUrl)
     } catch {
-      case e: Exception => {e.printStackTrace(); throw e}
+      case e: Exception => e.printStackTrace(); throw e
     }
 
   }
 
-  def insertData(data: (String, Double), conn: Connection): Unit = {
+  def insertData(data: ExchangeRateDataRow, conn: Connection): Unit = {
     try {
-      val sql = "INSERT INTO dbo.BloombergData VALUES (?, ?, CURRENT_TIMESTAMP)"
+      val sql =
+        s"""
+           |INSERT INTO dbo.ExchangeRateData(
+           |[Date]
+           |,[CurrencyCode]
+           |,[CrossCurrencyCode]
+           |,[CrossCurrencyRate]) VALUES (
+           |CURRENT_TIMESTAMP,
+           |?,
+           |?,
+           |?
+           |)""".stripMargin
       val pstmt = conn.prepareStatement(sql)
-      pstmt.setString(1, data._1)
-      pstmt.setDouble(2, data._2)
+      pstmt.setString(1, data.currencyCode)
+      pstmt.setString(2, data.crossCurrencyCode)
+      pstmt.setDouble(3, data.crossCurrencyRate)
       pstmt.executeUpdate()
-      println(s"Values ${data._1}, ${data._2} inserted into dbo.BloombergData")
+      println(
+        s"""
+           |Values
+           |${data.currencyCode},
+           |${data.crossCurrencyCode},
+           |${data.crossCurrencyRate}
+           |inserted into dbo.ExchangeRateData""".stripMargin)
       conn.close()
     } catch {
       case e: Exception => e.printStackTrace()

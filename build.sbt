@@ -25,6 +25,5 @@ lazy val rate = (project in file("rate"))
   .settings(
     commonSettings,
     mainClass in assembly := Some("rates.SimpleCurrRatesRequestApp"),
-    logLevel := Level.Debug,
     name := "rate"
   )

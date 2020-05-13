@@ -19,9 +19,15 @@ class SimpleCurrRatesRequest extends SessionTrait with MSSQLConnection {
     "USDINR Curncy",
     "USDMYR Curncy",
     "XAUUSD Curncy",
-    "XAGUSD Curncy"
-
+    "XAGUSD Curncy",
+    "USDCAD Curncy",
+    "USDCNH Curncy",
+    "USDEUR Curncy",
+    "USDGBP Curncy",
+    "USDXAU Curncy",
+    "USDXAG Curncy"
   )
+
   private val fields = Array("PX_BID")
 
   def run(cred: MSSQLCredentials): Unit = {
@@ -71,7 +77,10 @@ class SimpleCurrRatesRequest extends SessionTrait with MSSQLConnection {
         v.getElementAsString("security").substring(3,6),
         v.getElement("fieldData").getElementAsFloat64("PX_BID")
       )
-    }.toArray
+    }.toArray ++ Array(
+      ExchangeRateDataRow("USD", "USD", 1),
+      ExchangeRateDataRow("USD", "AED", 3.672)
+    ) // TODO: fix that nightmare
   }
 
 }

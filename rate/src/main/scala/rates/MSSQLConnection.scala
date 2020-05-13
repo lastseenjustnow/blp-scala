@@ -19,7 +19,6 @@ trait MSSQLConnection {
 
     val driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 
-
     Class.forName(driverClass).getDeclaredConstructor().newInstance()
 
     try {

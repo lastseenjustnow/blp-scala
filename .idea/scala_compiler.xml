@@ -4,6 +4,8 @@
     <profile name="sbt 1" modules="blp-scala_2634">
       <option name="postfixOps" value="true" />
     </profile>
-    <profile name="sbt 2" modules="bloomberg.blp_scala,bloomberg.rate,blp_scala,rate" />
+    <profile name="sbt 2" modules="bloomberg.blp_scala,bloomberg.rate,blp_scala,rate">
+      <option name="implicitConversions" value="true" />
+    </profile>
   </component>
 </project>

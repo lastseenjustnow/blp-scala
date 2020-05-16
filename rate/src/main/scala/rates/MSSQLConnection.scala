@@ -2,7 +2,7 @@ package rates
 
 import java.sql.{Connection, DriverManager}
 
-import rates.struct.{ExchangeRateDataRow, MSSQLCredentials}
+import rates.struct.MSSQLCredentials
 
 trait MSSQLConnection {
 
@@ -27,37 +27,5 @@ trait MSSQLConnection {
       case e: Exception => e.printStackTrace(); throw e
     }
 
-  }
-
-  def insertData(data: ExchangeRateDataRow, conn: Connection): Unit = {
-    try {
-      val sql =
-        s"""
-           |INSERT INTO dbo.ExchangeRateData(
-           |[Date]
-           |,[CurrencyCode]
-           |,[CrossCurrencyCode]
-           |,[CrossCurrencyRate]) VALUES (
-           |CURRENT_TIMESTAMP,
-           |?,
-           |?,
-           |?
-           |)""".stripMargin
-      val pstmt = conn.prepareStatement(sql)
-      pstmt.setString(1, data.currencyCode)
-      pstmt.setString(2, data.crossCurrencyCode)
-      pstmt.setDouble(3, data.crossCurrencyRate)
-      pstmt.executeUpdate()
-      println(
-        s"""
-           |Values
-           |${data.currencyCode},
-           |${data.crossCurrencyCode},
-           |${data.crossCurrencyRate}
-           |inserted into dbo.ExchangeRateData""".stripMargin)
-      conn.close()
-    } catch {
-      case e: Exception => e.printStackTrace()
-    }
   }
 }
